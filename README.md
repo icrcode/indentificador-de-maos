@@ -7,8 +7,6 @@ Tudo roda em tempo real, com um painel lateral que mostra a legenda de cada form
 - **Web** ([web/](web/)): roda numa aba do navegador e pode ser publicada na Vercel.
 - **Desktop** ([main.py](main.py)): roda em Python, com OpenCV, numa janela Full HD.
 
-<!-- Coloque aqui um print da aplicação: ![Demonstração](docs/demo.png) -->
-
 ## Funcionalidades
 
 - Detecta até **2 mãos** e identifica **polegar, indicador, médio, anelar e mínimo**, além de dizer se é a mão esquerda ou a direita.
@@ -180,5 +178,3 @@ def filtro_meu(img):
 ## Licença
 
 Distribuído sob a licença MIT. Veja [LICENSE](LICENSE).
-
-Feito por Ícaro Caldeira Botelho.
