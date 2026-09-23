@@ -1,4 +1,4 @@
-# Filtro com as mãos
+# Filtro com as Mãos
 
 Aplicação em Python que usa a webcam para **identificar as mãos e cada um dos dedos** e, ligando as pontas dos dedos levantados, **desenha uma forma** no vídeo. A imagem dentro da forma recebe um **filtro diferente para cada forma**: pontilhado, cartoon, térmico, neon e outros.
 
