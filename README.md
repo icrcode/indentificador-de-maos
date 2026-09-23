@@ -2,7 +2,10 @@
 
 Aplicação em Python que usa a webcam para **identificar as mãos e cada um dos dedos** e, ligando as pontas dos dedos levantados, **desenha uma forma** no vídeo. A imagem dentro da forma recebe um **filtro diferente para cada forma**: pontilhado, cartoon, térmico, neon e outros.
 
-Tudo roda em tempo real numa interface Full HD, com um painel lateral que mostra a legenda de cada forma e os dedos detectados.
+Tudo roda em tempo real, com um painel lateral que mostra a legenda de cada forma e os dedos detectados. O projeto tem duas versões com os mesmos recursos:
+
+- **Web** ([web/](web/)): roda numa aba do navegador e pode ser publicada na Vercel.
+- **Desktop** ([main.py](main.py)): roda em Python, com OpenCV, numa janela Full HD.
 
 <!-- Coloque aqui um print da aplicação: ![Demonstração](docs/demo.png) -->
 
@@ -34,13 +37,61 @@ Com 4 dedos, a forma depende da proporção da moldura: quase igual nos dois lad
 
 > Dica: para fazer uma moldura, use o polegar e o indicador das duas mãos, como quem enquadra uma foto.
 
-## Requisitos
+## Versão web (navegador)
+
+É um site estático, sem build: HTML, CSS e JavaScript puro.
+
+- As mãos são detectadas com o [MediaPipe Tasks Vision](https://www.npmjs.com/package/@mediapipe/tasks-vision), que roda no próprio navegador (WebAssembly e GPU).
+- Os filtros são shaders **WebGL2**, calculados na placa de vídeo.
+- O painel é HTML/CSS com efeito de vidro fosco.
+- **A imagem da câmera não sai do navegador.** Nada é enviado para servidor nenhum.
+
+### Rodar localmente
+
+A câmera só funciona em `https://` ou em `localhost`, então sirva a pasta `web/`:
+
+```bash
+cd web
+python -m http.server 8000
+```
+
+Depois, abra <http://localhost:8000> e clique em **Ativar câmera**.
+
+Para ver um filtro sem usar as mãos, use o modo demonstração: `http://localhost:8000/?demo=hexagono`. Funciona com qualquer forma: `circulo`, `triangulo`, `quadrado`, `horizontal`, `vertical`, `pentagono`, `hexagono`, `heptagono`, `octogono`, `eneagono` ou `decagono`.
+
+### Publicar na Vercel
+
+O [vercel.json](vercel.json) já está configurado para publicar só a pasta `web/`, sem build.
+
+**Pelo site:**
+
+1. Suba o repositório para o GitHub.
+2. Na [Vercel](https://vercel.com/new), clique em **Add New → Project** e importe o repositório.
+3. Deixe as configurações como vieram e clique em **Deploy**.
+
+**Pela linha de comando:**
+
+```bash
+npm i -g vercel
+vercel          # prévia
+vercel --prod   # produção
+```
+
+A Vercel já entrega o site em HTTPS, que o navegador exige para liberar a câmera.
+
+### Navegadores
+
+Funciona no Chrome, no Edge e no Firefox atuais, e no Safari 15 ou mais novo, porque todos têm WebGL2. No celular, o painel vira uma gaveta na parte de baixo da tela.
+
+## Versão desktop (Python)
+
+### Requisitos
 
 - Python **3.10+** (testado no 3.12)
 - Uma webcam
 - Windows, Linux ou macOS (a interface foi pensada para o Windows, com a fonte Segoe UI)
 
-## Instalação
+### Instalação
 
 ```bash
 git clone https://github.com/icrcode/indentificador-de-items.git
@@ -54,7 +105,7 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
-## Como usar
+### Como usar
 
 ```bash
 python main.py
@@ -62,7 +113,9 @@ python main.py
 
 Na primeira execução, o programa baixa sozinho o modelo de detecção de mãos do MediaPipe (`hand_landmarker.task`, cerca de 8 MB).
 
-### Teclas
+## Teclas
+
+As teclas são as mesmas nas duas versões. Na web, `Q` não existe: é só fechar a aba.
 
 | Tecla | Ação |
 | --- | --- |
@@ -72,7 +125,7 @@ Na primeira execução, o programa baixa sozinho o modelo de detecção de mãos
 
 ## Ajustes
 
-As configurações ficam no topo do [main.py](main.py):
+As configurações ficam no topo do [main.py](main.py) e do [web/app.js](web/app.js), com os mesmos nomes. Na web, a resolução acompanha o tamanho da janela.
 
 | Constante | O que faz |
 | --- | --- |
@@ -104,8 +157,13 @@ def filtro_meu(img):
 
 ```text
 .
-├── main.py             # aplicação completa
-├── requirements.txt    # dependências
+├── web/                  # versão para navegador (é o que vai para a Vercel)
+│   ├── index.html
+│   ├── style.css
+│   └── app.js            # detecção, formas e filtros em WebGL
+├── vercel.json           # publica a pasta web/ sem build
+├── main.py               # versão desktop em Python
+├── requirements.txt      # dependências do Python
 ├── hand_landmarker.task  # modelo do MediaPipe (baixado automaticamente, fora do git)
 └── LICENSE
 ```
@@ -115,7 +173,9 @@ def filtro_meu(img):
 - [MediaPipe](https://developers.google.com/mediapipe) — detecção das mãos
 - [OpenCV](https://opencv.org/) — câmera, filtros e desenho
 - [NumPy](https://numpy.org/) — cálculos com as imagens
-- [Pillow](https://python-pillow.org/) — textos com acentos e painel
+- [Pillow](https://python-pillow.org/) — textos com acentos e painel (desktop)
+- WebGL2 e Canvas 2D — filtros e desenho na versão web
+- [Vercel](https://vercel.com/) — hospedagem da versão web
 
 ## Licença
 

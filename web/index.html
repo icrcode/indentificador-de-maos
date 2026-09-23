@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Filtro com as mãos</title>
+  <meta name="description" content="Identifica as mãos pela webcam, liga as pontas dos dedos e aplica um filtro diferente para cada forma.">
+  <meta name="theme-color" content="#141210">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✋</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <video id="video" playsinline muted autoplay></video>
+  <canvas id="tela"></canvas>
+
+  <aside id="painel" class="painel" aria-label="Formas e filtros">
+    <header>
+      <h1>Formas &amp; filtros</h1>
+      <p>Levante os dedos para desenhar uma forma</p>
+    </header>
+    <div class="lista-wrap">
+      <div id="destaque" class="destaque"></div>
+      <ul id="lista" class="lista"></ul>
+    </div>
+    <footer>
+      <div class="total">
+        <span>Dedos levantados</span>
+        <strong id="total">0</strong>
+      </div>
+      <div id="maos" class="maos"></div>
+      <div class="teclas">
+        <button id="btnTela" type="button"><kbd>F</kbd> tela cheia</button>
+        <button id="btnEsconder" type="button"><kbd>H</kbd> painel</button>
+      </div>
+    </footer>
+  </aside>
+
+  <button id="btnMostrar" class="btn-mostrar" type="button" aria-label="Mostrar painel">☰</button>
+
+  <div id="inicio" class="inicio">
+    <div class="cartao">
+      <div class="emoji">✋</div>
+      <h2>Filtro com as mãos</h2>
+      <p>Mostre as mãos para a câmera. As pontas dos dedos levantados formam uma figura, e cada figura aplica um filtro diferente.</p>
+      <button id="btnIniciar" type="button">Ativar câmera</button>
+      <p id="status" class="status">A imagem não sai do seu navegador.</p>
+    </div>
+  </div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
