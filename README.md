@@ -1,2 +1,4 @@
-# indentificador-de-items
-Esse repositório serve para testar bibliotecas para visualização de items.
+# indentificador-de-maos
+Esse repositório é um teste bibliotecas para visualização de gestos.
+
+
